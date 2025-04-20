@@ -1,0 +1,34 @@
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: monitor-sensor-service
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: ${DB_DEFAULT_SCHEMA:monitor_sensor}
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          use_get_generated_keys: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/monitor-sensor}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+  liquibase:
+    change-log: classpath:/db/changelog/AppDatabaseChangelog.xml
+    liquibase-schema: ${DB_MIGRATION_SCHEMA:monitor_sensor_migration}
+    default-schema: ${DB_DEFAULT_SCHEMA:monitor_sensor}
+    drop-first: ${DB_DROP_FIRST:true}
+    user: ${DB_ADMIN_USER:postgres}
+    password: ${DB_ADMIN_PASSWORD:postgres}
+
+security:
+  user-pass: ${USER_PASSWORD:123}
+  admin-pass: ${ADMIN_PASSWORD:321}
+
+springdoc:
+  swagger-ui:
+    operations-sorter: method
+    tags-sorter: alpha

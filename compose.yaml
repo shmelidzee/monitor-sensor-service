@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: monitor-sensor
+    volumes:
+      - ./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
+  monitor-sensor-service:
+    container_name: monitor-sensor-service
+    build:
+      dockerfile: Dockerfile
+    image: monitor-sensor-service:1.0.0
+    ports:
+      - 8085:8085
+    environment:
+      - DB_URL=jdbc:postgresql://postgres:5432/monitor-sensor
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_ADMIN_USER=postgres
+      - DB_ADMIN_PASSWORD=postgres
+      - DB_DEFAULT_SCHEMA=monitor_sensor
+      - DB_MIGRATION_SCHEMA=monitor_sensor_migration
+      - DB_DROP_FIRST=true
+      - USER_PASSWORD=123
+      - ADMIN_PASSWORD=321
