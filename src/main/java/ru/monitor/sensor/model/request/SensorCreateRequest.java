@@ -2,10 +2,14 @@ package ru.monitor.sensor.model.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class SensorCreateRequest {
 
     @NotBlank(message = "Name is required")
@@ -32,6 +36,8 @@ public class SensorCreateRequest {
     private String description;
 
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Range {
 
         @NotNull(message = "From is required")

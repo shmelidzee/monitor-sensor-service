@@ -13,3 +13,9 @@ Implementation of a basic REST API for a monitoring sensors
 5. Select the interesting request and execute it 
 6. Check results requests
 ![image](https://github.com/user-attachments/assets/b64bb0fa-9edb-4097-ab0b-e13fbdf43623)
+
+
+# How to run main tests
+1. Clone repository, go to root directory
+2. Run ./gradlew clean build test in root directory
+3. You will see the test results in the console

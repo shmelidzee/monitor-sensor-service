@@ -1,61 +1,79 @@
 plugins {
-	id 'java'
-	id 'java-library'
-	id 'org.springframework.boot' version "${springBoot}"
-	id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
+    id 'jacoco'
+    id 'java-library'
+    id 'org.springframework.boot' version "${springBoot}"
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'ru.monitor.sensor'
 
 java {
-	sourceCompatibility = '21'
+    sourceCompatibility = '21'
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-	implementation "org.springframework.boot:spring-boot-starter-security:${springBoot}"
+    implementation "org.springframework.boot:spring-boot-starter-security:${springBoot}"
 
-	implementation 'org.springframework.boot:spring-boot-configuration-processor'
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
 
-	implementation 'org.postgresql:postgresql'
-	implementation "org.liquibase:liquibase-core:${liquibase}"
-	implementation "net.lbruun.springboot:preliquibase-spring-boot-starter:${preliquibase}"
+    implementation 'org.postgresql:postgresql'
+    implementation "org.liquibase:liquibase-core:${liquibase}"
+    implementation "net.lbruun.springboot:preliquibase-spring-boot-starter:${preliquibase}"
 
-	implementation 'org.projectlombok:lombok'
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
-	implementation 'javax.validation:validation-api:2.0.1.Final'
+    implementation 'org.projectlombok:lombok'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
 
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
-	annotationProcessor 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+    annotationProcessor 'org.projectlombok:lombok'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 test {
-	useJUnitPlatform()
-	include '**/*Test.class'
+    useJUnitPlatform()
+    include '**/*Test.class'
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "ru/monitor/sensor/config/**",
+                    "ru/monitor/sensor/controller/**",
+                    "ru/monitor/sensor/model/**",
+                    "ru/monitor/sensor/repository/**",
+            ])
+        }))
+    }
 }
 
 tasks.register('sourceJar', Jar) {
-	dependsOn classes
-	archiveClassifier.set('sources')
-	from sourceSets.main.allSource
+    dependsOn classes
+    archiveClassifier.set('sources')
+    from sourceSets.main.allSource
 }
 
 jar {
-	enabled = false
+    enabled = false
 }
