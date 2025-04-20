@@ -12,4 +12,4 @@ Implementation of a basic REST API for a monitoring sensors
    user:123
 5. Select the interesting request and execute it 
 6. Check results requests
-![img.png](img.png)
+![image](https://github.com/user-attachments/assets/b64bb0fa-9edb-4097-ab0b-e13fbdf43623)
