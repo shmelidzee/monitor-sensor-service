@@ -19,3 +19,4 @@ Implementation of a basic REST API for a monitoring sensors
 1. Clone repository, go to root directory
 2. Run ./gradlew clean build test in root directory
 3. You will see the test results in the console
+![image](https://github.com/user-attachments/assets/ab5d935c-bce8-4b59-9e81-1300769e81e9)
